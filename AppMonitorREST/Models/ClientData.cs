@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace AppMonitorREST.Models
 {
-    public class ClientPC
+    public class ClientData
     {
         [Key]
         public int Id { get; set; }
         public string PCName { get; set; }
-        public ICollection<Process> Processes { get; set; }
+        public List<Process> Processes { get; set; }
+
+        public ClientData()
+        {
+            Processes = new List<Process>();
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace AppMonitorREST.Models
         public string ProcessName { get; set; }
         [Required(ErrorMessage = "Это обязательное поле")]
         public DateTime LaunchTime { get; set; }
-        public DateTime UploadTime { get; set; }
+
+        public int ClientId { get; set; }
+        public ClientData Client { get; set; }
     }
 }

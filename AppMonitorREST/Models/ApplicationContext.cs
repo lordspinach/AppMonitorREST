@@ -9,7 +9,12 @@ namespace AppMonitorREST.Models
     public class ApplicationContext : DbContext
     {
         public DbSet<Process> Processes { get; set; }
-        public DbSet<ClientPC> PCs { get; set; }
+        public DbSet<ClientData> PCs { get; set; }
+
+        public ApplicationContext()
+        {
+
+        }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
