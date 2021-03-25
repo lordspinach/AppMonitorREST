@@ -28,10 +28,18 @@ namespace AppMonitorREST
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
             services.AddControllers();
+            services.AddSwaggerGen();
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
             app.UseDeveloperExceptionPage();
 
             app.UseStaticFiles();
