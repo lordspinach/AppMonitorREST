@@ -8,12 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
 
 namespace AppMonitorREST
 {
@@ -29,8 +26,18 @@ namespace AppMonitorREST
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+
+            var builder = services.AddIdentityCore<User>();
+            var identityBuilder = new IdentityBuilder(builder.UserType, services);
+
+            identityBuilder.AddEntityFrameworkStores<ApplicationDbContext>();
+            identityBuilder.AddSignInManager<SignInManager<User>>();
+
             services.AddControllers();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -42,7 +49,7 @@ namespace AppMonitorREST
                     {
                         Name = "Konstantin Gamayunov",
                         Email = "ksgamayunov@gmail.com",
-                        Url = new Uri("https://vk.com/lifeisntleaf")
+                        Url = new Uri("https://github.com/lordspinach/")
                     }
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -65,6 +72,9 @@ namespace AppMonitorREST
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

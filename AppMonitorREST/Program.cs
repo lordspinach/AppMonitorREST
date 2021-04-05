@@ -1,5 +1,7 @@
 using AppMonitorREST.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,8 +24,10 @@ namespace AppMonitorREST
 
                 try
                 {
-                    var context = services.GetRequiredService<ApplicationContext>();
-                    DBSet.Initialize(context);
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    context.Database.Migrate();
+                    DBSeed.SeedDataBaseAsync(context, userManager).Wait();
                 }
                 catch(Exception ex)
                 {

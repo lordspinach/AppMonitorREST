@@ -14,7 +14,7 @@ namespace AppMonitorREST.Models
         [Required(ErrorMessage = "Это обязательное поле")]
         public DateTime LaunchTime { get; set; }
 
-        public int ClientId { get; set; }
-        public ClientData Client { get; set; }
+        public int PCId { get; set; }
+        public PcData PC { get; set; }
     }
 }

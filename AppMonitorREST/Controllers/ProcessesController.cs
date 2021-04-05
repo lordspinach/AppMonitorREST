@@ -13,9 +13,9 @@ namespace AppMonitorREST.Controllers
     [ApiController]
     public class ProcessesController : ControllerBase
     {
-        readonly private ApplicationContext db;
+        readonly private ApplicationDbContext db;
 
-        public ProcessesController(ApplicationContext db)
+        public ProcessesController(ApplicationDbContext db)
         {
             this.db = db;
         }
@@ -59,7 +59,7 @@ namespace AppMonitorREST.Controllers
         /// [ProducesResponseType(StatusCodes.Status200Created)]
         [HttpPost]
         [Route("new")]
-        public void New([FromBody] ClientData model)
+        public void New([FromBody] PcData model)
         {
             var pc = db.PCs.Where(p => p.PCName == model.PCName);
             if (pc.Any())
@@ -71,13 +71,13 @@ namespace AppMonitorREST.Controllers
                         WindowTitle = proc.WindowTitle,
                         ProcessName = proc.ProcessName,
                         LaunchTime = proc.LaunchTime,
-                        Client = pc.First()
+                        PC = pc.First()
                     });
                 }
             }
             else
             {
-                var client = new ClientData()
+                var client = new PcData()
                 {
                     PCName = model.PCName
                 };
@@ -91,7 +91,7 @@ namespace AppMonitorREST.Controllers
                         WindowTitle = proc.WindowTitle,
                         ProcessName = proc.ProcessName,
                         LaunchTime = proc.LaunchTime,
-                        Client = client
+                        PC = client
                     });
                 }
             }
