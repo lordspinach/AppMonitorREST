@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AppMonitorREST.Models
 {
     [Table("AspNetUsers")]
-    public class User : IdentityUser
+    public class User : IdentityUser<int>
     {
         public int Id { get; set; }
         public User()

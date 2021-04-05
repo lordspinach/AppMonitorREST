@@ -26,7 +26,6 @@ namespace AppMonitorREST
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<User>>();
-                    context.Database.Migrate();
                     DBSeed.SeedDataBaseAsync(context, userManager).Wait();
                 }
                 catch(Exception ex)

@@ -29,14 +29,11 @@ namespace AppMonitorREST
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
 
-            var builder = services.AddIdentityCore<User>();
-            var identityBuilder = new IdentityBuilder(builder.UserType, services);
-
-            identityBuilder.AddEntityFrameworkStores<ApplicationDbContext>();
-            identityBuilder.AddSignInManager<SignInManager<User>>();
+            services.AddIdentity<User, IdentityRole<int>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddSignInManager<SignInManager<User>>();
 
             services.AddControllers();
-
 
             services.AddSwaggerGen(c =>
             {
